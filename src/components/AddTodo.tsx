@@ -1,18 +1,18 @@
+import { connect } from 'react-redux'
+import { addTodo } from '../actions'
+import { AppDispatch }from '../app/store'
 
-
-
-export const AddTodo = ({onClick}: {onClick: (value: string) => void}) => {
+const add = ({dispatch}: {dispatch: AppDispatch}) => {
     let input: HTMLInputElement | null;
     return (
         <div>
             <form 
             onSubmit={e => {
                 e.preventDefault()
-                console.log('submit')
                 if(!input || !input.value.trim()) {
                     return ;
                 }
-                onClick(input.value);
+                dispatch(addTodo(input.value));
                 input.value=''
             }}>
                 <input ref={node => {
@@ -29,3 +29,7 @@ export const AddTodo = ({onClick}: {onClick: (value: string) => void}) => {
         
     )
 }
+
+const AddTodo = connect()(add)
+
+export default AddTodo
